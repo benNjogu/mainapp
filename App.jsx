@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 
 const App = () => {
-  const [name, setName] = useState('Style Test');
-
-  const handlePress = () => {
-    setName('Style Test is Done');
-  };
-
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>{name}</Text>
-      <View style={styles.button}>
-        <Button title="Update State" onPress={handlePress} />
+      <View style={styles.view1}>
+        <Text style={styles.text}>1</Text>
+      </View>
+      <View style={styles.view2}>
+        <Text style={styles.text}>2</Text>
+      </View>
+      <View style={styles.view3}>
+        <Text style={styles.text}>3</Text>
       </View>
     </View>
   );
@@ -21,23 +20,37 @@ const App = () => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: '#0000ff',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 10,
-    borderColor: '#ff00ff',
-    borderRadius: 10,
-  },
-  button: {
-    width: 150,
-    height: 50,
+    justifyContent: 'space-evenly',
   },
   text: {
     color: '#fff',
     fontSize: 20,
     fontStyle: 'italic',
     margin: 10,
-    textTransform: 'uppercase',
+  },
+  view1: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#00ffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view2: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#ff00ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view3: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#ffff00',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
