@@ -2,30 +2,17 @@ import React, {useState} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 
 const App = () => {
-  const [name, setName] = useState('Ben');
-  const [session, setSession] = useState({number: 1, title: 'state'});
-  const [current, setCurrent] = useState(true);
+  const [value, setValue] = useState(0);
 
   const handlePress = () => {
-    setName('Kimangas');
-    setSession({number: 7, title: 'style'});
-    setCurrent(false);
+    setValue(value + 1);
   };
 
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>My name is {name}</Text>
-      <Text style={styles.text}>
-        This is session number {session.number} and about {session.title}
-      </Text>
-      <Text style={styles.text}>
-        {current ? 'current session' : 'next session'}
-      </Text>
-      <Button
-        style={styles.button}
-        title="Update state"
-        onPress={handlePress}
-      />
+      <Text style={styles.text}>{value}</Text>
+      <Button style={styles.button} title="ADD" onPress={handlePress} />
+      <Text style={styles.text}>you've clicked {value} times</Text>
     </View>
   );
 };
