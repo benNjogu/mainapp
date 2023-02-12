@@ -2,33 +2,42 @@ import React, {useState} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 
 const App = () => {
-  const [value, setValue] = useState(0);
+  const [name, setName] = useState('Style Test');
 
   const handlePress = () => {
-    setValue(value + 1);
+    setName('Style Test is Done');
   };
 
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>{value}</Text>
-      <Button style={styles.button} title="ADD" onPress={handlePress} />
-      <Text style={styles.text}>you've clicked {value} times</Text>
+      <Text style={styles.text}>{name}</Text>
+      <View style={styles.button}>
+        <Button title="Update State" onPress={handlePress} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
+    flex: 1,
     backgroundColor: '#0000ff',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
+    borderWidth: 10,
+    borderColor: '#ff00ff',
+    borderRadius: 10,
+  },
+  button: {
+    width: 150,
+    height: 50,
   },
   text: {
     color: '#fff',
     fontSize: 20,
     fontStyle: 'italic',
     margin: 10,
+    textTransform: 'uppercase',
   },
 });
 
