@@ -1,24 +1,31 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import {View, Text, Button, StyleSheet, Linking} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Button, StyleSheet} from 'react-native';
 
 const App = () => {
+  const [name, setName] = useState('Ben');
+  const [session, setSession] = useState({number: 1, title: 'state'});
+  const [current, setCurrent] = useState(true);
+
+  const handlePress = () => {
+    setName('Kimangas');
+    setSession({number: 7, title: 'style'});
+    setCurrent(false);
+  };
+
   return (
     <View style={styles.body}>
+      <Text style={styles.text}>My name is {name}</Text>
       <Text style={styles.text}>
-        I currently love this language very very much
+        This is session number {session.number} and about {session.title}
+      </Text>
+      <Text style={styles.text}>
+        {current ? 'current session' : 'next session'}
       </Text>
       <Button
-        title="My Love"
-        onPress={() =>
-          Linking.openURL('https://bernadnjogu.netlify.app')
-        }></Button>
+        style={styles.button}
+        title="Update state"
+        onPress={handlePress}
+      />
     </View>
   );
 };
