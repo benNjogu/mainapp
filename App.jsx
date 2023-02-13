@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 
 const App = () => {
@@ -25,9 +26,24 @@ const App = () => {
         onChangeText={value => setName(value)}
       />
       {/* <Button title={submitted ? 'Clear' : 'Submit'} onPress={handlePress} /> */}
-      <TouchableOpacity onPress={handlePress} style={styles.button}>
+      {/* <TouchableOpacity onPress={handlePress} style={styles.button}>
         <Text style={styles.text}>{submitted ? 'Clear' : 'Submit'}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <Pressable
+        onPress={handlePress}
+        hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
+        //onLongPress={handlePress}
+        //delayLongPress={2000}
+        //disabled={submitted}
+        android_ripple={{color: '#00f'}}
+        style={({pressed}) => [
+          {
+            backgroundColor: pressed ? '#dddddd' : '#00ff00',
+          },
+          styles.button,
+        ]}>
+        <Text style={styles.text}>{submitted ? 'Clear' : 'Submit'}</Text>
+      </Pressable>
       {submitted && (
         <Text style={styles.text}>Your are registered as: {name}</Text>
       )}
@@ -43,7 +59,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#00ff00',
     width: 150,
     height: 50,
     alignItems: 'center',
