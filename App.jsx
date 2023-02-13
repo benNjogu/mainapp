@@ -10,52 +10,57 @@ import {
 } from 'react-native';
 
 const App = () => {
-  const [items, setItems] = useState([
-    {name: 'Item 1'},
-    {name: 'Item 2'},
-    {name: 'Item 3'},
-    {name: 'Item 4'},
-    {name: 'Item 5'},
-    {name: 'Item 6'},
-    {name: 'Item 7'},
-    {name: 'Item 8'},
+  let itemNum = 1;
+
+  const [data, setData] = useState([
+    {
+      title: 'Title ' + itemNum,
+      data: [
+        `item ${itemNum} - ${itemNum} `,
+        `item ${itemNum} - ${itemNum + 1} `,
+      ],
+    },
   ]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const DATA = [
-    {
-      title: 'Title 1',
-      data: ['item 1-1', 'item 1-2', 'item 1-3'],
-    },
-    {
-      title: 'Title 2',
-      data: ['item 2-1', 'item 2-2', 'item 2-3'],
-    },
-    {
-      title: 'Title 3',
-      data: ['item 3-1', 'item 3-2', 'item 3-3'],
-    },
-    {
-      title: 'Title 4',
-      data: ['item 4-1', 'item 4-2', 'item 4-3'],
-    },
-  ];
-
   const onRefresh = () => {
     setRefreshing(true);
-    setItems([...items, {name: 'Item 79'}]);
+    setData(addItem(data));
     setRefreshing(false);
+  };
+
+  const addItem = data => {
+    itemNum = data.length + 1;
+
+    return [
+      ...data,
+      {
+        title: 'Title ' + itemNum,
+        data: [`item ${itemNum} - 1 `, `item ${itemNum} - 2 `],
+      },
+    ];
   };
 
   return (
     <SectionList
-      sections={DATA}
-      renderItem={({item}) => <Text style={styles.text}>{item}</Text>}
+      sections={data}
+      renderItem={({item}) => (
+        <View style={styles.textView}>
+          <Text style={styles.text}>{item}</Text>
+        </View>
+      )}
       renderSectionHeader={({section}) => (
         <View style={styles.item}>
           <Text style={styles.text}>{section.title}</Text>
         </View>
       )}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={['#ff00ff']}
+        />
+      }
     />
 
     // <FlatList
@@ -105,13 +110,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#4ae1fa',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
   },
   text: {
     color: '#000',
     fontSize: 35,
     fontStyle: 'italic',
-    margin: 10,
+  },
+  textView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopColor: '#fff',
+    borderWidth: 1,
+    borderColor: 'gray',
   },
 });
 
