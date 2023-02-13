@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 
 const App = () => {
   const [name, setName] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handlePress = () => {
+    setSubmitted(!submitted);
+  };
 
   return (
     <View style={styles.body}>
@@ -11,9 +16,11 @@ const App = () => {
         style={styles.input}
         placeholder="e.g. Ben"
         onChangeText={value => setName(value)}
-        //editable={false}
       />
-      <Text style={styles.text}>Your name is: {name}</Text>
+      <Button title={submitted ? 'Clear' : 'Submit'} onPress={handlePress} />
+      {submitted && (
+        <Text style={styles.text}>Your are registered as: {name}</Text>
+      )}
     </View>
   );
 };
@@ -24,7 +31,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
-    margin: 10,
   },
   input: {
     width: 200,
@@ -33,11 +39,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     textAlign: 'center',
     fontSize: 16,
+    margin: 10,
   },
   text: {
     color: '#000',
     fontSize: 18,
     fontStyle: 'italic',
+    margin: 10,
   },
 });
 
