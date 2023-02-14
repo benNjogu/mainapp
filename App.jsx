@@ -4,9 +4,8 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Button,
-  TouchableOpacity,
   Pressable,
+  Alert,
 } from 'react-native';
 
 const App = () => {
@@ -14,7 +13,21 @@ const App = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const handlePress = () => {
-    setSubmitted(!submitted);
+    if (name.length > 3) setSubmitted(!submitted);
+    else
+      Alert.alert(
+        'Warning',
+        'The name must be longer than 3 characters.',
+        [
+          {
+            text: 'LATER',
+            onPress: () => console.warn('Later again pressed'),
+          },
+          {text: 'CANCEL', onPress: () => console.warn('Cancel pressed')},
+          {text: 'OK', onPress: () => console.warn('OK pressed')},
+        ],
+        {cancelable: true, onDismiss: () => console.warn('Alert dismissed')},
+      );
   };
 
   return (
@@ -25,16 +38,9 @@ const App = () => {
         placeholder="e.g. Ben"
         onChangeText={value => setName(value)}
       />
-      {/* <Button title={submitted ? 'Clear' : 'Submit'} onPress={handlePress} /> */}
-      {/* <TouchableOpacity onPress={handlePress} style={styles.button}>
-        <Text style={styles.text}>{submitted ? 'Clear' : 'Submit'}</Text>
-      </TouchableOpacity> */}
       <Pressable
         onPress={handlePress}
         hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
-        //onLongPress={handlePress}
-        //delayLongPress={2000}
-        //disabled={submitted}
         android_ripple={{color: '#00f'}}
         style={({pressed}) => [
           {
@@ -62,7 +68,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     alignItems: 'center',
-    borderRadius: 24,
   },
   input: {
     width: 200,
