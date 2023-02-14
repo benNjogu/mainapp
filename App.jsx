@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   Alert,
+  ToastAndroid,
 } from 'react-native';
 
 const App = () => {
@@ -15,19 +16,26 @@ const App = () => {
   const handlePress = () => {
     if (name.length > 3) setSubmitted(!submitted);
     else
-      Alert.alert(
-        'Warning',
+      ToastAndroid.showWithGravityAndOffset(
         'The name must be longer than 3 characters.',
-        [
-          {
-            text: 'LATER',
-            onPress: () => console.warn('Later again pressed'),
-          },
-          {text: 'CANCEL', onPress: () => console.warn('Cancel pressed')},
-          {text: 'OK', onPress: () => console.warn('OK pressed')},
-        ],
-        {cancelable: true, onDismiss: () => console.warn('Alert dismissed')},
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+        100,
+        200,
       );
+    // Alert.alert(
+    //   'Warning',
+    //   'The name must be longer than 3 characters.',
+    //   [
+    //     {
+    //       text: 'LATER',
+    //       onPress: () => console.warn('Later again pressed'),
+    //     },
+    //     {text: 'CANCEL', onPress: () => console.warn('Cancel pressed')},
+    //     {text: 'OK', onPress: () => console.warn('OK pressed')},
+    //   ],
+    //   {cancelable: true, onDismiss: () => console.warn('Alert dismissed')},
+    // );
   };
 
   return (
