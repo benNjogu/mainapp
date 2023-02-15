@@ -8,9 +8,9 @@ import {
   Alert,
   ToastAndroid,
   Modal,
-  Image,
-  ImageBackground,
 } from 'react-native';
+import CustomButton from './components/CustomButton';
+import Header from './components/Header';
 
 const App = () => {
   const [name, setName] = useState('');
@@ -23,16 +23,51 @@ const App = () => {
   };
 
   return (
-    <ImageBackground
-      source={require('./android/app/src/main/assets/texture.webp')}
-      style={styles.body}>
+    <View style={styles.body}>
+      <Header />
+      <Modal
+        visible={showWarning}
+        transparent
+        onRequestClose={() => setShowWarning(false)}
+        animationType="slide"
+        hardwareAccelerated>
+        <View style={styles.centered_view}>
+          <View style={styles.warning_modal}>
+            <View style={styles.warning_title}>
+              <Text style={styles.text}>WARNING!</Text>
+            </View>
+            <View style={styles.warning_body}>
+              <Text style={styles.text}>
+                The name must be longer than 3 characters.
+              </Text>
+            </View>
+            <Pressable
+              onPress={() => setShowWarning(false)}
+              style={styles.warning_button}
+              android_ripple={{color: '#00000099'}}>
+              <Text style={styles.text}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <Text style={styles.text}>Please write your name:</Text>
       <TextInput
         style={styles.input}
         placeholder="e.g. Ben"
         onChangeText={value => setName(value)}
       />
-      <Pressable
+      <CustomButton
+        onPress={handlePress}
+        title={submitted ? 'Clear' : 'Submit'}
+        color={'#00ff00'}
+      />
+      <CustomButton
+        onPress={handlePress}
+        title={submitted ? 'Tested' : 'Test'}
+        color={'#ff00ff'}
+        style={{margin: 10}}
+      />
+      {/* <Pressable
         onPress={handlePress}
         hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
         android_ripple={{color: '#00f'}}
@@ -43,23 +78,11 @@ const App = () => {
           styles.button,
         ]}>
         <Text style={styles.text}>{submitted ? 'Clear' : 'Submit'}</Text>
-      </Pressable>
-      {submitted ? (
-        <View style={styles.body}>
-          <Text style={styles.text}>Your are registered as: {name}</Text>
-          <Image
-            style={styles.image}
-            source={require('./android/app/src/main/assets/done.png')}
-            //source={{uri: 'https://novemberlane.net/wp-content/uploads/2016/06/Avoid-the-Oops.png'}}
-          />
-        </View>
-      ) : (
-        <Image
-          style={styles.image}
-          source={require('./android/app/src/main/assets/error.png')}
-        />
+      </Pressable> */}
+      {submitted && (
+        <Text style={styles.text}>Your are registered as: {name}</Text>
       )}
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -67,24 +90,19 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#fff',
     alignItems: 'center',
   },
   button: {
     width: 150,
     height: 50,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   centered_view: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#00000099',
-  },
-  image: {
-    width: 100,
-    height: 100,
-    margin: 10,
   },
   input: {
     width: 200,
