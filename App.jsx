@@ -8,6 +8,8 @@ import {
   Alert,
   ToastAndroid,
   Modal,
+  Image,
+  ImageBackground,
 } from 'react-native';
 
 const App = () => {
@@ -21,32 +23,9 @@ const App = () => {
   };
 
   return (
-    <View style={styles.body}>
-      <Modal
-        visible={showWarning}
-        transparent
-        onRequestClose={() => setShowWarning(false)}
-        animationType="slide"
-        hardwareAccelerated>
-        <View style={styles.centered_view}>
-          <View style={styles.warning_modal}>
-            <View style={styles.warning_title}>
-              <Text style={styles.text}>WARNING!</Text>
-            </View>
-            <View style={styles.warning_body}>
-              <Text style={styles.text}>
-                The name must be longer than 3 characters.
-              </Text>
-            </View>
-            <Pressable
-              onPress={() => setShowWarning(false)}
-              style={styles.warning_button}
-              android_ripple={{color: '#00000099'}}>
-              <Text style={styles.text}>OK</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+    <ImageBackground
+      source={require('./android/app/src/main/assets/texture.webp')}
+      style={styles.body}>
       <Text style={styles.text}>Please write your name:</Text>
       <TextInput
         style={styles.input}
@@ -65,10 +44,22 @@ const App = () => {
         ]}>
         <Text style={styles.text}>{submitted ? 'Clear' : 'Submit'}</Text>
       </Pressable>
-      {submitted && (
-        <Text style={styles.text}>Your are registered as: {name}</Text>
+      {submitted ? (
+        <View style={styles.body}>
+          <Text style={styles.text}>Your are registered as: {name}</Text>
+          <Image
+            style={styles.image}
+            source={require('./android/app/src/main/assets/done.png')}
+            //source={{uri: 'https://novemberlane.net/wp-content/uploads/2016/06/Avoid-the-Oops.png'}}
+          />
+        </View>
+      ) : (
+        <Image
+          style={styles.image}
+          source={require('./android/app/src/main/assets/error.png')}
+        />
       )}
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -76,19 +67,24 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   button: {
     width: 150,
     height: 50,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   centered_view: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#00000099',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10,
   },
   input: {
     width: 200,
