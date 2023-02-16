@@ -22,14 +22,14 @@ const ScreenA = ({navigation, route}) => {
   const [name, setName] = useState('');
 
   const handlePress = () => {
-    // navigation.navigate('Screen_B', {
-    //   itemName: 'Item from screen A',
-    //   itemId: 12,
-    // });
+    navigation.navigate('Screen_B', {
+      itemName: 'Item from screen A',
+      itemId: 12,
+    });
 
-    for (let user of users) {
-      setName(user.name);
-    }
+    // for (let user of users) {
+    //   setName(user.name);
+    // }
   };
 
   return (
@@ -40,7 +40,7 @@ const ScreenA = ({navigation, route}) => {
         title={'Last User'}
         color={'#00ff00'}
       />
-      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.text}>{route.params?.message}</Text>
     </View>
   );
 };
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    fontWeight: 'bold',
     margin: 10,
+    fontFamily: 'IndieFlower-Regular',
   },
 });
 
