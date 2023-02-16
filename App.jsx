@@ -1,4 +1,4 @@
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -6,7 +6,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ScreenA from './screens/ScreenA';
 import ScreenB from './screens/ScreenB';
 
-const tab = createMaterialBottomTabNavigator();
+const tab = createMaterialTopTabNavigator();
 
 const App = () => {
   return (
@@ -38,11 +38,7 @@ const App = () => {
         activeColor="tomato"
         inactiveColor="#3e2465"
         barStyle={{backgroundColor: '#694fad'}}>
-        <tab.Screen
-          name="Screen_A"
-          component={ScreenA}
-          options={{tabBarBadge: 3}}
-        />
+        <tab.Screen name="Screen_A" component={ScreenA} />
         <tab.Screen name="Screen_B" component={ScreenB} />
       </tab.Navigator>
     </NavigationContainer>
