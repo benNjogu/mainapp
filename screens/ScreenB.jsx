@@ -3,9 +3,9 @@ import React from 'react';
 
 import CustomButton from '../components/CustomButton';
 
-const ScreenB = ({navigation}) => {
+const ScreenB = ({navigation, route}) => {
   const handlePress = () => {
-    navigation.navigate('Screen_A');
+    navigation.navigate('Screen_A', {message: 'Message from A'});
   };
 
   return (
@@ -16,6 +16,8 @@ const ScreenB = ({navigation}) => {
         title={'Screen A'}
         color={'#ff00ff'}
       />
+      <Text style={styles.text}>{route.params?.itemName}</Text>
+      <Text style={styles.text}>ID:-{route.params?.itemId}</Text>
     </View>
   );
 };

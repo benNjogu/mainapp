@@ -3,9 +3,12 @@ import React from 'react';
 
 import CustomButton from '../components/CustomButton';
 
-const ScreenA = ({navigation}) => {
+const ScreenA = ({navigation, route}) => {
   const handlePress = () => {
-    navigation.navigate('Screen_B');
+    navigation.navigate('Screen_B', {
+      itemName: 'Item from screen A',
+      itemId: 12,
+    });
   };
 
   return (
@@ -16,6 +19,7 @@ const ScreenA = ({navigation}) => {
         title={'Screen B'}
         color={'#00ff00'}
       />
+      <Text style={styles.text}>{route.params?.message}</Text>
     </View>
   );
 };
