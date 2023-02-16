@@ -2,6 +2,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 
 import CustomButton from '../components/CustomButton';
+import MyStyles from '../utils/Styles';
 
 const ScreenB = ({navigation, route}) => {
   const handlePress = () => {
@@ -10,14 +11,18 @@ const ScreenB = ({navigation, route}) => {
 
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>Screen B</Text>
+      <Text style={[MyStyles.CustomFont, styles.text]}>Screen B</Text>
       <CustomButton
         onPress={handlePress}
         title={'Screen A'}
         color={'#ff00ff'}
       />
-      <Text style={styles.text}>{route.params?.itemName}</Text>
-      <Text style={styles.text}>ID:-{route.params?.itemId}</Text>
+      <Text style={[MyStyles.CustomFont, styles.text]}>
+        {route.params?.itemName}
+      </Text>
+      <Text style={[MyStyles.CustomFont, styles.text]}>
+        ID:-{route.params?.itemId}
+      </Text>
     </View>
   );
 };
@@ -30,7 +35,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    fontWeight: 'bold',
     margin: 10,
   },
 });

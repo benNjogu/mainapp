@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import CustomButton from '../components/CustomButton';
+import MyStyles from '../utils/Styles';
 
 const ScreenA = ({navigation, route}) => {
   const users = [
@@ -34,13 +35,15 @@ const ScreenA = ({navigation, route}) => {
 
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>Screen A</Text>
+      <Text style={[MyStyles.CustomFont, styles.text]}>Screen A</Text>
       <CustomButton
         onPress={handlePress}
         title={'Last User'}
         color={'#00ff00'}
       />
-      <Text style={styles.text}>{route.params?.message}</Text>
+      <Text style={[MyStyles.CustomFont, styles.text]}>
+        {route.params?.message}
+      </Text>
     </View>
   );
 };
@@ -54,7 +57,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 40,
     margin: 10,
-    fontFamily: 'IndieFlower-Regular',
   },
 });
 

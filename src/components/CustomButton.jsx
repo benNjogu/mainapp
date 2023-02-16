@@ -1,5 +1,7 @@
-import {View, Text, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
+
+import MyStyles from '../utils/Styles';
 
 const CustomButton = ({onPress, title, color, style}) => {
   return (
@@ -14,7 +16,7 @@ const CustomButton = ({onPress, title, color, style}) => {
         styles.button,
         {...style},
       ]}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={MyStyles.ButtonText}>{title}</Text>
     </Pressable>
   );
 };
