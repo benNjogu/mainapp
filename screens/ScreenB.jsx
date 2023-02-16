@@ -5,7 +5,7 @@ import CustomButton from '../components/CustomButton';
 
 const ScreenB = ({navigation, route}) => {
   const handlePress = () => {
-    navigation.navigate('Screen_A', {message: 'Message from A'});
+    navigation.navigate('Screen_A', {message: 'Message from B'});
   };
 
   return (

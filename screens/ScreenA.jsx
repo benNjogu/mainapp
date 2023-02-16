@@ -1,14 +1,35 @@
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
 
 import CustomButton from '../components/CustomButton';
 
 const ScreenA = ({navigation, route}) => {
+  const users = [
+    {
+      id: 1,
+      name: 'User A',
+    },
+    {
+      id: 2,
+      name: 'User B',
+    },
+    {
+      id: 3,
+      name: 'User C',
+    },
+  ];
+
+  const [name, setName] = useState('');
+
   const handlePress = () => {
-    navigation.navigate('Screen_B', {
-      itemName: 'Item from screen A',
-      itemId: 12,
-    });
+    // navigation.navigate('Screen_B', {
+    //   itemName: 'Item from screen A',
+    //   itemId: 12,
+    // });
+
+    for (let user of users) {
+      setName(user.name);
+    }
   };
 
   return (
@@ -16,10 +37,10 @@ const ScreenA = ({navigation, route}) => {
       <Text style={styles.text}>Screen A</Text>
       <CustomButton
         onPress={handlePress}
-        title={'Screen B'}
+        title={'Last User'}
         color={'#00ff00'}
       />
-      <Text style={styles.text}>{route.params?.message}</Text>
+      <Text style={styles.text}>{name}</Text>
     </View>
   );
 };
