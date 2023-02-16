@@ -1,19 +1,47 @@
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import React, {useState} from 'react';
+import React from 'react';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import ScreenA from './screens/ScreenA';
 import ScreenB from './screens/ScreenB';
 
-const stack = createStackNavigator();
+const tab = createBottomTabNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <stack.Navigator>
-        <stack.Screen name="Screen_A" component={ScreenA} />
-        <stack.Screen name="Screen_B" component={ScreenB} />
-      </stack.Navigator>
+      <tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, size, color}) => {
+            let iconName;
+            if (route.name === 'Screen_A') {
+              iconName = 'autoprefixer';
+              size = focused ? 25 : 20;
+              //color = focused ? '#f0f' : '#555';
+            } else if (route.name === 'Screen_B') {
+              iconName = 'btc';
+              size = focused ? 25 : 20;
+              //color = focused ? '#f0f' : '#555';
+            }
+
+            return <FontAwesome5 name={iconName} size={size} color={color} />;
+          },
+
+          tabBarActiveTintColor: '#f0f',
+          tabBarInactiveTintColor: '#555',
+          tabBarActiveBackgroundColor: '#fff',
+          tabBarInactiveBackgroundColor: '#999',
+          tabBarShowLabel: true,
+          tabBarLabelStyle: {fontSize: 14},
+        })}>
+        <tab.Screen
+          name="Screen_A"
+          component={ScreenA}
+          options={{tabBarBadge: 3}}
+        />
+        <tab.Screen name="Screen_B" component={ScreenB} />
+      </tab.Navigator>
     </NavigationContainer>
   );
 };
