@@ -8,5 +8,6 @@ export default StyleSheet.create({
     fontFamily: 'IndieFlower-Regular',
     fontSize: 25,
     padding: 10,
+    color: '#fff',
   },
 });

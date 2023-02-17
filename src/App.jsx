@@ -1,18 +1,17 @@
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import ScreenA from './screens/ScreenA';
-import ScreenB from './screens/ScreenB';
+import Login from './screens/Login';
+import Home from './screens/Home';
 
-const tab = createMaterialTopTabNavigator();
+const stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <tab.Navigator
+      <stack.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, size, color}) => {
             let iconName;
@@ -28,20 +27,17 @@ const App = () => {
 
             return <FontAwesome5 name={iconName} size={size} color={color} />;
           },
-
-          tabBarActiveTintColor: '#f0f',
-          tabBarInactiveTintColor: '#555',
-          tabBarActiveBackgroundColor: '#fff',
-          tabBarInactiveBackgroundColor: '#999',
-          tabBarShowLabel: true,
-          tabBarLabelStyle: {fontSize: 14},
         })}
         activeColor="tomato"
         inactiveColor="#3e2465"
         barStyle={{backgroundColor: '#694fad'}}>
-        <tab.Screen name="Screen_A" component={ScreenA} />
-        <tab.Screen name="Screen_B" component={ScreenB} />
-      </tab.Navigator>
+        <stack.Screen
+          name="Login"
+          component={Login}
+          options={{headerShown: false}}
+        />
+        <stack.Screen name="Home" component={Home} />
+      </stack.Navigator>
     </NavigationContainer>
   );
 };
