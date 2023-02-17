@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, StyleSheet, Alert} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SQLite from 'react-native-sqlite-storage';
 
 import CustomButton from '../components/CustomButton';
@@ -36,14 +35,6 @@ const Home = ({navigation, route}) => {
           }
         });
       });
-
-      // AsyncStorage.getItem('UserData').then(value => {
-      //   if (value !== null) {
-      //     let user = JSON.parse(value);
-      //     setName(user.name);
-      //     setAge(user.age);
-      //   }
-      // });
     } catch (error) {
       console.log(error);
     }
@@ -53,11 +44,6 @@ const Home = ({navigation, route}) => {
     if (name.length === 0) Alert.alert('Warning', 'Enter your name');
     else {
       try {
-        // let user = {
-        //   name,
-        // };
-        // await AsyncStorage.mergeItem('UserData', JSON.stringify(user));
-
         db.transaction(tx => {
           tx.executeSql(
             'UPDATE Users SET Name=?',
@@ -83,8 +69,6 @@ const Home = ({navigation, route}) => {
         {
           text: 'OK',
           onPress: async () => {
-            //await AsyncStorage.removeItem('UserName');
-
             db.transaction(tx => {
               tx.executeSql(
                 'DELETE FROM Users',

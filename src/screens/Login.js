@@ -1,7 +1,6 @@
 import {View, Image, Text, StyleSheet, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SQLite from 'react-native-sqlite-storage';
 
 import CustomButton from '../components/CustomButton';
@@ -36,12 +35,6 @@ const Login = ({navigation}) => {
 
   const getData = async () => {
     try {
-      //   AsyncStorage.getItem('UserData').then(value => {
-      //     if (value !== null) {
-      //       navigation.navigate('Home');
-      //     }
-      //   });
-
       db.transaction(tx => {
         tx.executeSql('SELECT Name, Age FROM Users', [], (tx, results) => {
           let len = results.rows.length;
@@ -60,25 +53,11 @@ const Login = ({navigation}) => {
       Alert.alert('Warning', 'Enter your credentials');
     else {
       try {
-        // let user = {
-        //   name,
-        //   age,
-        // };
-        // await AsyncStorage.setItem('UserData', JSON.stringify(user));
-
         await db.transaction(async tx => {
           await tx.executeSql('INSERT INTO Users (Name, Age) VALUES (?,?)', [
             name,
             age,
           ]);
-
-          //   await tx.executeSql(
-          //     "INSERT INTO Users (Name, Age) VALUES ('" +
-          //       name +
-          //       "', " +
-          //       age +
-          //       ")',
-          //   );
         });
         navigation.navigate('Home');
       } catch (error) {
