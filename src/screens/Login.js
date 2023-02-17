@@ -69,10 +69,10 @@ const Login = ({navigation}) => {
   return (
     <View style={styles.body}>
       <Image
-        source={require('../../assets/images/sql.png')}
+        source={require('../../assets/images/redux.png')}
         style={styles.logo}
       />
-      <Text style={styles.text}>Async Storage</Text>
+      <Text style={styles.text}>Redux</Text>
       <TextInput
         placeholder="UserName"
         style={styles.input}
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   logo: {
-    width: '100%',
-    height: 100,
+    width: 150,
+    height: 150,
     margin: 20,
   },
   text: {
