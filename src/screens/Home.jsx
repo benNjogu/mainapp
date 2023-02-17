@@ -7,6 +7,7 @@ import MyStyles from '../utils/Styles';
 
 const Home = ({navigation, route}) => {
   const [name, setName] = useState('');
+  const [age, setAge] = useState('');
 
   useEffect(() => {
     getData();
@@ -14,9 +15,11 @@ const Home = ({navigation, route}) => {
 
   const getData = async () => {
     try {
-      AsyncStorage.getItem('UserName').then(value => {
+      AsyncStorage.getItem('UserData').then(value => {
         if (value !== null) {
-          setName(value);
+          let user = JSON.parse(value);
+          setName(user.name);
+          setAge(user.age);
         }
       });
     } catch (error) {
@@ -28,7 +31,10 @@ const Home = ({navigation, route}) => {
     if (name.length === 0) Alert.alert('Warning', 'Enter your name');
     else {
       try {
-        await AsyncStorage.setItem('UserName', name);
+        let user = {
+          name,
+        };
+        await AsyncStorage.mergeItem('UserData', JSON.stringify(user));
         Alert.alert('Success', 'Your data has been updated');
       } catch (error) {
         console.log(error);
@@ -61,6 +67,9 @@ const Home = ({navigation, route}) => {
       <Text style={[MyStyles.CustomFont, styles.text]}>Karibu Nyumbani...</Text>
       <Text style={[MyStyles.CustomFont, styles.text]}>Welcome Home...</Text>
       <Text style={[MyStyles.CustomFont, styles.text]}>{name}</Text>
+      <Text style={[MyStyles.CustomFont, styles.text]}>
+        You're now {age} yrs old.
+      </Text>
       <TextInput
         placeholder="UserName"
         style={[styles.input, {marginTop: 0}]}

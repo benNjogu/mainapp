@@ -15,7 +15,7 @@ const Login = ({navigation}) => {
 
   const getData = async () => {
     try {
-      AsyncStorage.getItem('UserName').then(value => {
+      AsyncStorage.getItem('UserData').then(value => {
         if (value !== null) {
           navigation.navigate('Home');
         }
@@ -26,10 +26,15 @@ const Login = ({navigation}) => {
   };
 
   const handlePress = async () => {
-    if (name.length === 0) Alert.alert('Warning', 'Enter your credentials');
+    if (name.length === 0 || age.length === 0)
+      Alert.alert('Warning', 'Enter your credentials');
     else {
       try {
-        await AsyncStorage.setItem('UserName', name);
+        let user = {
+          name,
+          age,
+        };
+        await AsyncStorage.setItem('UserData', JSON.stringify(user));
 
         navigation.navigate('Home');
       } catch (error) {
