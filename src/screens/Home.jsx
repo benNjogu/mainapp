@@ -1,9 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, StyleSheet, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SQLite from 'react-native-sqlite-storage';
 
 import CustomButton from '../components/CustomButton';
 import MyStyles from '../utils/Styles';
+
+const db = SQLite.openDatabase(
+  {
+    name: 'mainDB',
+    location: 'default',
+  },
+  () => {},
+  error => console.log(error),
+);
 
 const Home = ({navigation, route}) => {
   const [name, setName] = useState('');
@@ -15,13 +25,25 @@ const Home = ({navigation, route}) => {
 
   const getData = async () => {
     try {
-      AsyncStorage.getItem('UserData').then(value => {
-        if (value !== null) {
-          let user = JSON.parse(value);
-          setName(user.name);
-          setAge(user.age);
-        }
+      db.transaction(tx => {
+        tx.executeSql('SELECT Name, Age FROM Users', [], (tx, results) => {
+          let len = results.rows.length;
+          if (len > 0) {
+            let userName = results.rows.item(0).Name;
+            let userAge = results.rows.item(0).Age;
+            setName(userName);
+            setAge(userAge);
+          }
+        });
       });
+
+      // AsyncStorage.getItem('UserData').then(value => {
+      //   if (value !== null) {
+      //     let user = JSON.parse(value);
+      //     setName(user.name);
+      //     setAge(user.age);
+      //   }
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -31,11 +53,21 @@ const Home = ({navigation, route}) => {
     if (name.length === 0) Alert.alert('Warning', 'Enter your name');
     else {
       try {
-        let user = {
-          name,
-        };
-        await AsyncStorage.mergeItem('UserData', JSON.stringify(user));
-        Alert.alert('Success', 'Your data has been updated');
+        // let user = {
+        //   name,
+        // };
+        // await AsyncStorage.mergeItem('UserData', JSON.stringify(user));
+
+        db.transaction(tx => {
+          tx.executeSql(
+            'UPDATE Users SET Name=?',
+            [name],
+            () => {
+              Alert.alert('Success', 'Your data has been updated');
+            },
+            error => console.log(error),
+          );
+        });
       } catch (error) {
         console.log(error);
       }
@@ -47,13 +79,22 @@ const Home = ({navigation, route}) => {
       Alert.alert('Danger', 'Delete your credentials', [
         {
           text: 'CANCEL',
-          onPress: () => {},
         },
         {
           text: 'OK',
           onPress: async () => {
-            await AsyncStorage.removeItem('UserName');
-            navigation.navigate('Login');
+            //await AsyncStorage.removeItem('UserName');
+
+            db.transaction(tx => {
+              tx.executeSql(
+                'DELETE FROM Users',
+                [],
+                () => {
+                  navigation.navigate('Login');
+                },
+                error => console.log(error),
+              );
+            });
           },
         },
       ]);
