@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     margin: 10,
+    color: '#000',
   },
   subTitle: {
     fontSize: 20,
