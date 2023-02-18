@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, StyleSheet, Alert} from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
+import {useSelector, useDispatch} from 'react-redux';
 
+import {setName, setAge, increaseAge} from '../redux/actions';
 import CustomButton from '../components/CustomButton';
 import MyStyles from '../utils/Styles';
 
@@ -15,8 +17,11 @@ const db = SQLite.openDatabase(
 );
 
 const Home = ({navigation, route}) => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  const {name, age} = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
+  // const [name, setName] = useState('');
+  // const [age, setAge] = useState('');
 
   useEffect(() => {
     getData();
@@ -30,8 +35,8 @@ const Home = ({navigation, route}) => {
           if (len > 0) {
             let userName = results.rows.item(0).Name;
             let userAge = results.rows.item(0).Age;
-            setName(userName);
-            setAge(userAge);
+            dispatch(setName(userName));
+            dispatch(setAge(userAge));
           }
         });
       });
@@ -87,6 +92,10 @@ const Home = ({navigation, route}) => {
     }
   };
 
+  const handleIncreaseAge = () => {
+    dispatch(increaseAge());
+  };
+
   return (
     <View style={styles.body}>
       <Text style={[MyStyles.CustomFont, styles.text]}>Karibu Nyumbani...</Text>
@@ -99,14 +108,20 @@ const Home = ({navigation, route}) => {
         placeholder="UserName"
         style={[styles.input, {marginTop: 0}]}
         value={name}
-        onChangeText={value => setName(value)}
+        onChangeText={value => dispatch(setName(value))}
       />
       <CustomButton color={'#ff7f00'} title={'Update'} onPress={handleUpdate} />
       <CustomButton
         color={'red'}
         title={'Remove'}
-        style={{margin: 10}}
+        style={{marginTop: 10}}
         onPress={handleDelete}
+      />
+      <CustomButton
+        color={'#0080ff'}
+        title={'Increase'}
+        style={{marginTop: 10}}
+        onPress={handleIncreaseAge}
       />
     </View>
   );

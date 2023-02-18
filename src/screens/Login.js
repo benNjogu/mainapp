@@ -2,6 +2,8 @@ import {View, Image, Text, StyleSheet, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import SQLite from 'react-native-sqlite-storage';
+import {useSelector, useDispatch} from 'react-redux';
+import {setName, setAge} from '../redux/actions';
 
 import CustomButton from '../components/CustomButton';
 
@@ -15,8 +17,11 @@ const db = SQLite.openDatabase(
 );
 
 const Login = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  const {name, age} = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
+  // const [name, setName] = useState('');
+  // const [age, setAge] = useState('');
 
   useEffect(() => {
     createTable();
@@ -53,6 +58,9 @@ const Login = ({navigation}) => {
       Alert.alert('Warning', 'Enter your credentials');
     else {
       try {
+        dispatch(setName(name));
+        dispatch(setAge(age));
+
         await db.transaction(async tx => {
           await tx.executeSql('INSERT INTO Users (Name, Age) VALUES (?,?)', [
             name,
@@ -76,12 +84,12 @@ const Login = ({navigation}) => {
       <TextInput
         placeholder="UserName"
         style={styles.input}
-        onChangeText={value => setName(value)}
+        onChangeText={value => dispatch(setName(value))}
       />
       <TextInput
         placeholder="Age"
         style={[styles.input, {marginTop: 0}]}
-        onChangeText={value => setAge(value)}
+        onChangeText={value => dispatch(setAge(value))}
       />
       <CustomButton color={'#00ff00'} title={'Login'} onPress={handlePress} />
     </View>
