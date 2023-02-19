@@ -5,9 +5,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Provider} from 'react-redux';
 import {store} from './redux/store';
 
-import Login from './screens/Login';
+import Splash from './screens/Splash';
 import Home from './screens/Home';
-import Map from './screens/Map';
 
 const stack = createStackNavigator();
 
@@ -36,12 +35,11 @@ const App = () => {
           inactiveColor="#3e2465"
           barStyle={{backgroundColor: '#694fad'}}>
           <stack.Screen
-            name="Login"
-            component={Login}
+            name="Splash"
+            component={Splash}
             options={{headerShown: false}}
           />
           <stack.Screen name="Home" component={Home} />
-          <stack.Screen name="Map" component={Map} />
         </stack.Navigator>
       </NavigationContainer>
     </Provider>

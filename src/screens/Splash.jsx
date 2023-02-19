@@ -1,14 +1,10 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 
-import MyStyles from '../utils/Styles';
-
-const Map = ({route}) => {
-  const {city} = route.params;
-
+const Splash = () => {
   return (
-    <View style={styles.body}>
-      <Text style={[MyStyles.CustomFont, styles.text]}>Karibu {city} </Text>
+    <View>
+      <Text>Splash</Text>
     </View>
   );
 };
@@ -24,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default Splash;
