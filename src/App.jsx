@@ -7,6 +7,7 @@ import {store} from './redux/store';
 
 import Login from './screens/Login';
 import Home from './screens/Home';
+import Map from './screens/Map';
 
 const stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const App = () => {
             options={{headerShown: false}}
           />
           <stack.Screen name="Home" component={Home} />
+          <stack.Screen name="Map" component={Map} />
         </stack.Navigator>
       </NavigationContainer>
     </Provider>

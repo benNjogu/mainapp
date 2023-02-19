@@ -13,10 +13,6 @@ export const getCities = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          param1: 'Your value',
-          param2: 'Your value',
-        }),
       });
       const json = await result.json();
       if (json) {

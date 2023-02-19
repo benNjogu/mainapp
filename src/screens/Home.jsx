@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, StyleSheet, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -20,9 +27,6 @@ const db = SQLite.openDatabase(
 const Home = ({navigation, route}) => {
   const {name, age, cities} = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
-
-  // const [name, setName] = useState('');
-  // const [age, setAge] = useState('');
 
   useEffect(() => {
     getData();
@@ -104,38 +108,20 @@ const Home = ({navigation, route}) => {
       <FlatList
         data={cities}
         renderItem={({item}) => (
-          <View style={styles.item}>
-            <Text style={styles.title}>{item.country}</Text>
-            <Text style={styles.subTitle}>{item.city}</Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Map', {
+                city: item.city,
+              });
+            }}>
+            <View style={styles.item}>
+              <Text style={styles.title}>{item.country}</Text>
+              <Text style={styles.subTitle}>{item.city}</Text>
+            </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-
-      {/* <Text style={[MyStyles.CustomFont, styles.text]}>Welcome Home...</Text>
-      <Text style={[MyStyles.CustomFont, styles.text]}>{name}</Text>
-      <Text style={[MyStyles.CustomFont, styles.text]}>
-        You're now {age} yrs old.
-      </Text>
-      <TextInput
-        placeholder="UserName"
-        style={[styles.input, {marginTop: 0}]}
-        value={name}
-        onChangeText={value => dispatch(setName(value))}
-      />
-      <CustomButton color={'#ff7f00'} title={'Update'} onPress={handleUpdate} />
-      <CustomButton
-        color={'red'}
-        title={'Remove'}
-        style={{marginTop: 10}}
-        onPress={handleDelete}
-      />
-      <CustomButton
-        color={'#0080ff'}
-        title={'Increase'}
-        style={{marginTop: 10}}
-        onPress={handleIncreaseAge}
-      /> */}
     </View>
   );
 };
@@ -143,25 +129,14 @@ const Home = ({navigation, route}) => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  input: {
-    width: 300,
-    borderWidth: 1,
-    borderColor: '#555',
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    textAlign: 'center',
-    fontSize: 20,
-    marginTop: 32,
-    marginBottom: 10,
   },
   item: {
     backgroundColor: '#fff',
     borderWidth: 2,
     borderColor: '#cccccc',
-    margin: 7,
+    borderRadius: 5,
+    marginTop: 7,
     width: 350,
     justifyContent: 'center',
     alignItems: 'center',
