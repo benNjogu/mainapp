@@ -5,7 +5,7 @@ import GlobalStyles from '../utils/Styles';
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Home');
+      navigation.replace('My Tasks');
     }, 2000);
   }, []);
 
