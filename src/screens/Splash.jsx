@@ -1,10 +1,21 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, Image} from 'react-native';
+import React, {useEffect} from 'react';
+import GlobalStyles from '../utils/Styles';
 
-const Splash = () => {
+const Splash = ({navigation}) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.replace('Home');
+    }, 2000);
+  }, []);
+
   return (
-    <View>
-      <Text>Splash</Text>
+    <View style={styles.body}>
+      <Image
+        style={styles.logo}
+        source={require('../../assets/images/mytodo.png')}
+      />
+      <Text style={[styles.text, GlobalStyles.CustomFont]}>Ben To-Do App</Text>
     </View>
   );
 };
@@ -12,11 +23,18 @@ const Splash = () => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#0080ff',
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    margin: 20,
   },
   text: {
     fontSize: 40,
-    margin: 10,
+    color: '#fff',
   },
 });
 

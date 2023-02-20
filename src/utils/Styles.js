@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   CustomFont: {
-    fontFamily: 'DancingScript-VariableFont_wght',
+    fontFamily: 'AbrilFatface-Regular',
   },
   ButtonText: {
     fontFamily: 'IndieFlower-Regular',
