@@ -1,8 +1,11 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  CustomFont: {
+  CustomFontBig: {
     fontFamily: 'AbrilFatface-Regular',
+  },
+  CustomFontHW: {
+    fontFamily: 'IndieFlower-Regular',
   },
   ButtonText: {
     fontFamily: 'IndieFlower-Regular',
@@ -10,4 +13,5 @@ export default StyleSheet.create({
     padding: 10,
     color: '#fff',
   },
+  ColorPrimary: '#0080ff',
 });

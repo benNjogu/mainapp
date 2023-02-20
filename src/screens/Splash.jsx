@@ -15,7 +15,9 @@ const Splash = ({navigation}) => {
         style={styles.logo}
         source={require('../../assets/images/mytodo.png')}
       />
-      <Text style={[styles.text, GlobalStyles.CustomFont]}>Ben To-Do App</Text>
+      <Text style={[styles.text, GlobalStyles.CustomFontBig]}>
+        Ben's To-Do App
+      </Text>
     </View>
   );
 };
