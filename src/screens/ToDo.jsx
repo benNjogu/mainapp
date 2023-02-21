@@ -9,14 +9,12 @@ import StatusBar from '../utils/StatusBar';
 import GlobalStyles from '../utils/Styles';
 import Fab from '../utils/FloatingActionButton';
 import FlatList from '../components/FlatList';
-import getNumTasks from '../utils/NumberOfTasks';
 
 const ToDo = ({navigation}) => {
   const {tasks} = useSelector(state => state.taskReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getNumTasks();
     getTasks();
   }, []);
 

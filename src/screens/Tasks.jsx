@@ -40,7 +40,7 @@ const Tasks = ({navigation}) => {
     } else {
       try {
         let task = {
-          ID: taskID,
+          ID: taskID + title,
           Title: title,
           Desc: desc,
           Done: done,

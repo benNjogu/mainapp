@@ -48,7 +48,7 @@ const MyFlatList = ({data, key, navigation}) => {
           <TouchableOpacity
             style={styles.item}
             onPress={() => {
-              dispatch(setTaskID(item.ID));
+              dispatch(setTaskID(item.ID + item.title));
               navigation.navigate('Task');
             }}>
             <Card
