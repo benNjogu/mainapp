@@ -11,6 +11,7 @@ import React, {useEffect} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CheckBox from '@react-native-community/checkbox';
 
 import {setTasks, setTaskID} from './../redux/actions';
 import GlobalStyles from '../utils/Styles';
@@ -44,11 +45,25 @@ const ToDo = ({navigation}) => {
       .catch(error => console.log(error));
   };
 
+  const checkTask = (id, newValue) => {
+    const index = tasks.findIndex(task => task.ID === id);
+    if (index > -1) {
+      let newTasks = [...tasks];
+      newTasks[index].Done = newValue;
+      AsyncStorage.setItem('Tasks', JSON.stringify(newTasks))
+        .then(() => {
+          dispatch(setTasks(newTasks));
+          Alert.alert('Success', 'Task state is changed.');
+        })
+        .catch(err => console.log(err));
+    }
+  };
+
   return (
     <View style={styles.body}>
       <StatusBar backgroundColor={GlobalStyles.ColorPrimary} />
       <FlatList
-        data={tasks}
+        data={tasks.filter(task => task.Done === false)}
         renderItem={({item}) => (
           <TouchableOpacity
             style={styles.item}
@@ -57,6 +72,11 @@ const ToDo = ({navigation}) => {
               navigation.navigate('Task');
             }}>
             <View style={styles.item_row}>
+              <CheckBox
+                tintColors={{true: GlobalStyles.ColorPrimary}}
+                value={item.Done}
+                onValueChange={newValue => checkTask(item.ID, newValue)}
+              />
               <View style={styles.item_body}>
                 <Text
                   style={[styles.title, GlobalStyles.CustomFontHW]}
