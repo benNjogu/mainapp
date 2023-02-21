@@ -1,20 +1,15 @@
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Button,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+import TextInput from '../utils/TextInput';
 import CustomButton from '../components/CustomButton';
 import CheckBox from '../utils/CheckBox';
 import {setTasks} from './../redux/actions';
+import ColorBar from '../components/ColorBar';
+import GlobalStyles from '../utils/Styles';
 
 const Tasks = ({navigation}) => {
   const {tasks, taskID} = useSelector(state => state.taskReducer);
@@ -76,66 +71,40 @@ const Tasks = ({navigation}) => {
   return (
     <View style={styles.body}>
       <TextInput
-        style={styles.input}
         placeholder="Title"
         value={title}
         onChangeText={value => setTitle(value)}
       />
       <TextInput
-        style={[styles.input, {minHeight: 100}, {maxHeight: 120}]}
         placeholder="Description"
-        multiline
         value={desc}
         onChangeText={value => {
           setDesc(value);
         }}
+        moreStyles={{minHeight: 100, maxHeight: 120}}
+        multiline
       />
-      <View style={styles.color_bar}>
-        <TouchableOpacity
-          style={styles.color_white}
-          onPress={() => setColor('white')}>
-          {color === 'white' && (
-            <FontAwesome5 name={'check'} size={25} color={'#000'} />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.color_red}
-          onPress={() => setColor('red')}>
-          {color === 'red' && (
-            <FontAwesome5 name={'check'} size={25} color={'#000'} />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.color_blue}
-          onPress={() => setColor('blue')}>
-          {color === 'blue' && (
-            <FontAwesome5 name={'check'} size={25} color={'#000'} />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.color_green}
-          onPress={() => setColor('green')}>
-          {color === 'green' && (
-            <FontAwesome5 name={'check'} size={25} color={'#000'} />
-          )}
-        </TouchableOpacity>
-      </View>
+      <ColorBar color={color} setColor={setColor} />
       <View style={styles.extra_row}>
-        <TouchableOpacity style={styles.extra_button}>
-          <FontAwesome5 name="bell" size={25} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.extra_button}>
-          <FontAwesome5 name="camera" size={25} color="#fff" />
-        </TouchableOpacity>
+        <CustomButton
+          title={''}
+          color={GlobalStyles.ColorPrimary}
+          iconName="bell"
+        />
+        <CustomButton
+          title={''}
+          color={GlobalStyles.ColorPrimary}
+          iconName={'camera'}
+        />
       </View>
       <View style={styles.checkbox}>
         <CheckBox value={done} onValueChange={newValue => setDone(newValue)} />
         <Text style={styles.text}>Is Done</Text>
       </View>
       <CustomButton
+        style={{flex: 0}}
         title="Save Task"
         color="#1eb900"
-        style={{width: '100%'}}
         onPress={handleAddTask}
       />
     </View>
@@ -152,63 +121,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
   },
-  color_bar: {
-    flexDirection: 'row',
-    height: 50,
-    borderWidth: 2,
-    borderRadius: 10,
-    borderColor: '#555',
-    marginVertical: 10,
-    overflow: 'hidden',
-  },
-  color_white: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  color_red: {
-    flex: 1,
-    backgroundColor: '#f28b82',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  color_green: {
-    flex: 1,
-    backgroundColor: '#ccff90',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  color_blue: {
-    flex: 1,
-    backgroundColor: '#aecbfa',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  extra_button: {
-    flex: 1,
-    height: 50,
-    backgroundColor: '#0080ff',
-    borderRadius: 10,
-    marginHorizontal: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   extra_row: {
     flexDirection: 'row',
     marginVertical: 10,
-  },
-  input: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#555555',
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    textAlign: 'left',
-    fontSize: 20,
-    margin: 10,
-    paddingHorizontal: 10,
-    textAlignVertical: 'top',
   },
   text: {
     fontSize: 20,

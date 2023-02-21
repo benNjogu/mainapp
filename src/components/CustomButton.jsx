@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import MyStyles from '../utils/Styles';
 
-const CustomButton = ({onPress, title, color, style}) => {
+const CustomButton = ({iconName, onPress, title, color, style}) => {
   return (
     <Pressable
       onPress={onPress}
@@ -16,17 +17,33 @@ const CustomButton = ({onPress, title, color, style}) => {
         styles.button,
         {...style},
       ]}>
-      <Text style={MyStyles.ButtonText}>{title}</Text>
+      {title === '' ? (
+        <FontAwesome5 name={iconName} size={25} color="#fff" />
+      ) : (
+        <Text style={MyStyles.ButtonText}>{title}</Text>
+      )}
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    width: 150,
+    flex: 1,
+    width: '100%',
     height: 50,
     alignItems: 'center',
     borderRadius: 5,
+    marginHorizontal: 5,
+    justifyContent: 'center',
+  },
+  extra_button: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#0080ff',
+    borderRadius: 10,
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     color: '#000',
