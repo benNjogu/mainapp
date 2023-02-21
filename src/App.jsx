@@ -1,17 +1,17 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Provider} from 'react-redux';
 import {store} from './redux/store';
-import {StatusBar} from 'react-native';
 
 import Splash from './screens/Splash';
 import Done from './screens/Done';
 import ToDo from './screens/ToDo';
 import Tasks from './screens/Tasks';
 import GlobalStyles from './utils/Styles';
+import getTasks from './utils/NumberOfTasks';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,12 +40,12 @@ const HomeTabs = () => {
       <Tab.Screen
         name={'To-Do'}
         component={ToDo}
-        options={{headerShown: false}}
+        options={{headerShown: false, tabBarBadge: getTasks()[0]}}
       />
       <Tab.Screen
         name={'Done'}
         component={Done}
-        options={{headerShown: false}}
+        options={{headerShown: false, tabBarBadge: getTasks()[1]}}
       />
     </Tab.Navigator>
   );
