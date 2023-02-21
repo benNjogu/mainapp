@@ -8,8 +8,7 @@ import {setTasks, setTaskID} from './../redux/actions';
 import StatusBar from '../utils/StatusBar';
 import GlobalStyles from '../utils/Styles';
 import Fab from '../utils/FloatingActionButton';
-import Card from '../components/Card';
-import FlatList from '../utils/FlatList';
+import FlatList from '../components/FlatList';
 
 const ToDo = ({navigation}) => {
   const {tasks} = useSelector(state => state.taskReducer);
@@ -30,33 +29,9 @@ const ToDo = ({navigation}) => {
       .catch(error => console.log(error));
   };
 
-  const handleDelete = id => {
-    const filteredTasks = tasks.filter(task => task.ID !== id);
-    AsyncStorage.setItem('Tasks', JSON.stringify(filteredTasks))
-      .then(() => {
-        dispatch(setTasks(filteredTasks));
-        Alert.alert('Success!', 'Task removed successfully.');
-      })
-      .catch(error => console.log(error));
-  };
-
   const handleFabPress = () => {
     dispatch(setTaskID(tasks.length + 1));
     navigation.navigate('Task');
-  };
-
-  const checkTask = (id, newValue) => {
-    const index = tasks.findIndex(task => task.ID === id);
-    if (index > -1) {
-      let newTasks = [...tasks];
-      newTasks[index].Done = newValue;
-      AsyncStorage.setItem('Tasks', JSON.stringify(newTasks))
-        .then(() => {
-          dispatch(setTasks(newTasks));
-          Alert.alert('Success', 'Task state is changed.');
-        })
-        .catch(err => console.log(err));
-    }
   };
 
   return (
@@ -64,20 +39,8 @@ const ToDo = ({navigation}) => {
       <StatusBar color={GlobalStyles.ColorPrimary} />
       <FlatList
         data={tasks.filter(task => task.Done === false)}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {
-              dispatch(setTaskID(item.ID));
-              navigation.navigate('Task');
-            }}>
-            <Card
-              item={item}
-              onValueChange={newValue => checkTask(item.ID, newValue)}
-              onPress={() => handleDelete(item.ID)}
-            />
-          </TouchableOpacity>
-        )}
+        key={(item, index) => index.toString()}
+        navigation={navigation}
       />
       <Fab
         icon={<FontAwesome5 name={'plus'} size={20} color={'#fff'} />}
@@ -90,15 +53,6 @@ const ToDo = ({navigation}) => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-  },
-
-  item: {
-    marginHorizontal: 10,
-    marginVertical: 7,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    borderRadius: 10,
-    elevation: 5,
   },
 });
 

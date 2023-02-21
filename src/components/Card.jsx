@@ -23,11 +23,7 @@ const Card = ({item, onValueChange, onPress}) => {
           styles.color,
         ]}
       />
-      <CheckBox
-        colors={{true: GlobalStyles.ColorPrimary}}
-        value={item.Done}
-        onValueChange={onValueChange}
-      />
+      <CheckBox value={item.Done} onValueChange={onValueChange} />
       <View style={styles.item_body}>
         <Text
           style={[styles.title, GlobalStyles.CustomFontHW]}

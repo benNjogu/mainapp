@@ -1,8 +1,13 @@
 import CheckBox from '@react-native-community/checkbox';
+import GlobalStyles from './Styles';
 
-const MyCheckBox = ({colors, value, onValueChange}) => {
+const MyCheckBox = ({value, onValueChange}) => {
   return (
-    <CheckBox tintColors={colors} value={value} onValueChange={onValueChange} />
+    <CheckBox
+      tintColors={{true: GlobalStyles.ColorPrimary}}
+      value={value}
+      onValueChange={onValueChange}
+    />
   );
 };
 

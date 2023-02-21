@@ -10,10 +10,10 @@ import {
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CheckBox from '@react-native-community/checkbox';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import CustomButton from '../components/CustomButton';
+import CheckBox from '../utils/CheckBox';
 import {setTasks} from './../redux/actions';
 
 const Tasks = ({navigation}) => {
@@ -129,11 +129,7 @@ const Tasks = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.checkbox}>
-        <CheckBox
-          tintColors={{true: '#1eb900'}}
-          value={done}
-          onValueChange={newValue => setDone(newValue)}
-        />
+        <CheckBox value={done} onValueChange={newValue => setDone(newValue)} />
         <Text style={styles.text}>Is Done</Text>
       </View>
       <CustomButton
