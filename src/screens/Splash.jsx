@@ -1,5 +1,7 @@
-import {View, Text, StyleSheet, StatusBar, Image} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import React, {useEffect} from 'react';
+
+import StatusBar from '../utils/StatusBar';
 import GlobalStyles from '../utils/Styles';
 
 const Splash = ({navigation}) => {
@@ -11,7 +13,7 @@ const Splash = ({navigation}) => {
 
   return (
     <View style={styles.body}>
-      <StatusBar backgroundColor={GlobalStyles.ColorPrimary} />
+      <StatusBar color={GlobalStyles.ColorPrimary} />
       <Image
         style={styles.logo}
         source={require('../../assets/images/mytodo.png')}
