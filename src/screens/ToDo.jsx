@@ -1,21 +1,15 @@
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  FlatList,
-  Alert,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import React, {useEffect} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CheckBox from '@react-native-community/checkbox';
 
 import {setTasks, setTaskID} from './../redux/actions';
 import StatusBar from '../utils/StatusBar';
 import GlobalStyles from '../utils/Styles';
 import Fab from '../utils/FloatingActionButton';
+import Card from '../components/Card';
+import FlatList from '../utils/FlatList';
 
 const ToDo = ({navigation}) => {
   const {tasks} = useSelector(state => state.taskReducer);
@@ -77,48 +71,13 @@ const ToDo = ({navigation}) => {
               dispatch(setTaskID(item.ID));
               navigation.navigate('Task');
             }}>
-            <View style={styles.item_row}>
-              <View
-                style={[
-                  {
-                    backgroundColor:
-                      item.Color === 'red'
-                        ? '#f28b82'
-                        : item.Color === 'blue'
-                        ? '#aecbfa'
-                        : item.Color === 'green'
-                        ? '#ccff90'
-                        : '#fff',
-                  },
-                  styles.color,
-                ]}
-              />
-              <CheckBox
-                tintColors={{true: GlobalStyles.ColorPrimary}}
-                value={item.Done}
-                onValueChange={newValue => checkTask(item.ID, newValue)}
-              />
-              <View style={styles.item_body}>
-                <Text
-                  style={[styles.title, GlobalStyles.CustomFontHW]}
-                  numberOfLines={1}>
-                  {item.Title}
-                </Text>
-                <Text
-                  style={[styles.subtitle, GlobalStyles.CustomFontHW]}
-                  numberOfLines={1}>
-                  {item.Desc}
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={styles.delete}
-                onPress={() => handleDelete(item.ID)}>
-                <FontAwesome5 name="trash" size={25} color="#ff3636" />
-              </TouchableOpacity>
-            </View>
+            <Card
+              item={item}
+              onValueChange={newValue => checkTask(item.ID, newValue)}
+              onPress={() => handleDelete(item.ID)}
+            />
           </TouchableOpacity>
         )}
-        keyExtractor={(item, index) => index.toString()}
       />
       <Fab
         icon={<FontAwesome5 name={'plus'} size={20} color={'#fff'} />}
@@ -132,18 +91,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  color: {
-    width: 20,
-    height: 100,
-    borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
-  },
-  delete: {
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   item: {
     marginHorizontal: 10,
     marginVertical: 7,
@@ -151,23 +99,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     elevation: 5,
-  },
-  item_body: {
-    flex: 1,
-  },
-  item_row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  subtitle: {
-    color: '#999',
-    fontSize: 20,
-    margin: 5,
-  },
-  title: {
-    color: '#000',
-    fontSize: 30,
-    margin: 5,
   },
 });
 
