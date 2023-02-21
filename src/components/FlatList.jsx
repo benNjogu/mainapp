@@ -1,4 +1,11 @@
-import {FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
+import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -34,28 +41,35 @@ const MyFlatList = ({data, key, navigation}) => {
   };
 
   return (
-    <FlatList
-      data={data}
-      renderItem={({item}) => (
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            dispatch(setTaskID(item.ID));
-            navigation.navigate('Task');
-          }}>
-          <Card
-            item={item}
-            onValueChange={newValue => checkTask(item.ID, newValue)}
-            onPress={() => handleDelete(item.ID)}
-          />
-        </TouchableOpacity>
-      )}
-      keyExtractor={key}
-    />
+    <View style={styles.body}>
+      <FlatList
+        data={data}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {
+              dispatch(setTaskID(item.ID));
+              navigation.navigate('Task');
+            }}>
+            <Card
+              item={item}
+              onValueChange={newValue => checkTask(item.ID, newValue)}
+              onPressDelete={() => handleDelete(item.ID)}
+            />
+          </TouchableOpacity>
+        )}
+        keyExtractor={key}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+  },
   item: {
     marginHorizontal: 10,
     marginVertical: 7,

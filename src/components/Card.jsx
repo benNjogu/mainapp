@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CheckBox from '../utils/CheckBox';
 import GlobalStyles from '../utils/Styles';
 
-const Card = ({item, onValueChange, onPress}) => {
+const Card = ({item, onValueChange, onPressDelete}) => {
   return (
     <View style={styles.item_row}>
       <View
@@ -36,7 +36,7 @@ const Card = ({item, onValueChange, onPress}) => {
           {item.Desc}
         </Text>
       </View>
-      <TouchableOpacity style={styles.delete} onPress={onPress}>
+      <TouchableOpacity style={styles.delete} onPress={onPressDelete}>
         <FontAwesome5 name="trash" size={25} color="#ff3636" />
       </TouchableOpacity>
     </View>
