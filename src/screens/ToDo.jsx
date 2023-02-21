@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   Text,
   FlatList,
-  StatusBar,
   Alert,
 } from 'react-native';
 import React, {useEffect} from 'react';
@@ -14,7 +13,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 
 import {setTasks, setTaskID} from './../redux/actions';
+import StatusBar from '../utils/StatusBar';
 import GlobalStyles from '../utils/Styles';
+import Fab from '../utils/FloatingActionButton';
 
 const ToDo = ({navigation}) => {
   const {tasks} = useSelector(state => state.taskReducer);
@@ -45,6 +46,11 @@ const ToDo = ({navigation}) => {
       .catch(error => console.log(error));
   };
 
+  const handleFabPress = () => {
+    dispatch(setTaskID(tasks.length + 1));
+    navigation.navigate('Task');
+  };
+
   const checkTask = (id, newValue) => {
     const index = tasks.findIndex(task => task.ID === id);
     if (index > -1) {
@@ -61,7 +67,7 @@ const ToDo = ({navigation}) => {
 
   return (
     <View style={styles.body}>
-      <StatusBar backgroundColor={GlobalStyles.ColorPrimary} />
+      <StatusBar color={GlobalStyles.ColorPrimary} />
       <FlatList
         data={tasks.filter(task => task.Done === false)}
         renderItem={({item}) => (
@@ -114,14 +120,10 @@ const ToDo = ({navigation}) => {
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          dispatch(setTaskID(tasks.length + 1));
-          navigation.navigate('Task');
-        }}>
-        <FontAwesome5 name={'plus'} size={20} color={'#fff'} />
-      </TouchableOpacity>
+      <Fab
+        icon={<FontAwesome5 name={'plus'} size={20} color={'#fff'} />}
+        onPress={handleFabPress}
+      />
     </View>
   );
 };
@@ -129,18 +131,6 @@ const ToDo = ({navigation}) => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-  },
-  button: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#0080ff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    elevation: 5,
   },
   color: {
     width: 20,
