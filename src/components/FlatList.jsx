@@ -32,6 +32,7 @@ const MyFlatList = ({data, key, navigation}) => {
         .catch(err => console.log(err));
     }
   };
+
   return (
     <FlatList
       data={data}
