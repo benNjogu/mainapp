@@ -72,6 +72,21 @@ const ToDo = ({navigation}) => {
               navigation.navigate('Task');
             }}>
             <View style={styles.item_row}>
+              <View
+                style={[
+                  {
+                    backgroundColor:
+                      item.Color === 'red'
+                        ? '#f28b82'
+                        : item.Color === 'blue'
+                        ? '#aecbfa'
+                        : item.Color === 'green'
+                        ? '#ccff90'
+                        : '#fff',
+                  },
+                  styles.color,
+                ]}
+              />
               <CheckBox
                 tintColors={{true: GlobalStyles.ColorPrimary}}
                 value={item.Done}
@@ -127,6 +142,12 @@ const styles = StyleSheet.create({
     right: 10,
     elevation: 5,
   },
+  color: {
+    width: 20,
+    height: 100,
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
+  },
   delete: {
     width: 50,
     height: 50,
@@ -136,7 +157,6 @@ const styles = StyleSheet.create({
   item: {
     marginHorizontal: 10,
     marginVertical: 7,
-    paddingHorizontal: 10,
     backgroundColor: '#fff',
     justifyContent: 'center',
     borderRadius: 10,

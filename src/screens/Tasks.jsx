@@ -11,9 +11,10 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
-import {setTasks} from './../redux/actions';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import CustomButton from '../components/CustomButton';
+import {setTasks} from './../redux/actions';
 
 const Tasks = ({navigation}) => {
   const {tasks, taskID} = useSelector(state => state.taskReducer);
@@ -22,6 +23,7 @@ const Tasks = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [done, setDone] = useState(false);
+  const [color, setColor] = useState('white');
 
   useEffect(() => {
     getTask();
@@ -33,6 +35,7 @@ const Tasks = ({navigation}) => {
       setTitle(task.Title);
       setDesc(task.Desc);
       setDone(task.Done);
+      setColor(task.Color);
     }
   };
 
@@ -46,6 +49,7 @@ const Tasks = ({navigation}) => {
           Title: title,
           Desc: desc,
           Done: done,
+          Color: color,
         };
         const index = tasks.findIndex(task => task.ID === taskID);
         let newTasks = [];
@@ -87,10 +91,42 @@ const Tasks = ({navigation}) => {
         }}
       />
       <View style={styles.color_bar}>
-        <TouchableOpacity style={styles.color_white}></TouchableOpacity>
-        <TouchableOpacity style={styles.color_red}></TouchableOpacity>
-        <TouchableOpacity style={styles.color_blue}></TouchableOpacity>
-        <TouchableOpacity style={styles.color_green}></TouchableOpacity>
+        <TouchableOpacity
+          style={styles.color_white}
+          onPress={() => setColor('white')}>
+          {color === 'white' && (
+            <FontAwesome5 name={'check'} size={25} color={'#000'} />
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.color_red}
+          onPress={() => setColor('red')}>
+          {color === 'red' && (
+            <FontAwesome5 name={'check'} size={25} color={'#000'} />
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.color_blue}
+          onPress={() => setColor('blue')}>
+          {color === 'blue' && (
+            <FontAwesome5 name={'check'} size={25} color={'#000'} />
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.color_green}
+          onPress={() => setColor('green')}>
+          {color === 'green' && (
+            <FontAwesome5 name={'check'} size={25} color={'#000'} />
+          )}
+        </TouchableOpacity>
+      </View>
+      <View style={styles.extra_row}>
+        <TouchableOpacity style={styles.extra_button}>
+          <FontAwesome5 name="bell" size={25} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.extra_button}>
+          <FontAwesome5 name="camera" size={25} color="#fff" />
+        </TouchableOpacity>
       </View>
       <View style={styles.checkbox}>
         <CheckBox
@@ -137,21 +173,34 @@ const styles = StyleSheet.create({
   },
   color_red: {
     flex: 1,
-    backgroundColor: '#f00',
+    backgroundColor: '#f28b82',
     justifyContent: 'center',
     alignItems: 'center',
   },
   color_green: {
     flex: 1,
-    backgroundColor: '#0f0',
+    backgroundColor: '#ccff90',
     justifyContent: 'center',
     alignItems: 'center',
   },
   color_blue: {
     flex: 1,
-    backgroundColor: '#00f',
+    backgroundColor: '#aecbfa',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  extra_button: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#0080ff',
+    borderRadius: 10,
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  extra_row: {
+    flexDirection: 'row',
+    marginVertical: 10,
   },
   input: {
     width: '100%',
