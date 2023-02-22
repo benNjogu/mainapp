@@ -14,7 +14,7 @@ const Done = ({navigation}) => {
       <StatusBar backgroundColor={GlobalStyles.ColorPrimary} />
       <FlatList
         data={tasks.filter(task => task.Done === true)}
-        key={(item, index) => index.toString()}
+        myKey={(item, index) => index.toString()}
         navigation={navigation}
       />
     </View>

@@ -31,12 +31,10 @@ const HomeTabs = () => {
 
           return <FontAwesome5 name={iconName} size={size} color={color} />;
         },
-      })}
-      tabBarOptions={{
         activeTintColor: GlobalStyles.ColorPrimary,
         inactiveTintColor: '#777777',
         labelStyle: {fontSize: 15, fontWeight: 'bold'},
-      }}>
+      })}>
       <Tab.Screen
         name={'To-Do'}
         component={ToDo}

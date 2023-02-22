@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setTasks, setTaskID} from '../redux/actions';
 import Card from './Card';
 
-const MyFlatList = ({data, key, navigation}) => {
+const MyFlatList = ({data, myKey, navigation}) => {
   const {tasks} = useSelector(state => state.taskReducer);
   const dispatch = useDispatch();
 
@@ -58,7 +58,7 @@ const MyFlatList = ({data, key, navigation}) => {
             />
           </TouchableOpacity>
         )}
-        keyExtractor={key}
+        keyExtractor={myKey}
       />
     </View>
   );
