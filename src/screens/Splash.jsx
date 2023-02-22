@@ -19,8 +19,9 @@ const Splash = ({navigation}) => {
         source={require('../../assets/images/mytodo.png')}
       />
       <Text style={[styles.text, GlobalStyles.CustomFontBig]}>
-        KeyMan's To-Do App
+        My To-Do List
       </Text>
+      <Text style={[styles.text, GlobalStyles.CustomFontSign]}>by keyman</Text>
     </View>
   );
 };

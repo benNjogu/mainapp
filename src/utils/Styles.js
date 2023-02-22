@@ -7,6 +7,9 @@ export default StyleSheet.create({
   CustomFontHW: {
     fontFamily: 'IndieFlower-Regular',
   },
+  CustomFontSign: {
+    fontFamily: 'DancingScript-VariableFont_wght',
+  },
   ButtonText: {
     fontFamily: 'IndieFlower-Regular',
     fontSize: 25,
