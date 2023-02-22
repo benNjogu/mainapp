@@ -22,6 +22,7 @@ const ToDo = ({navigation}) => {
     AsyncStorage.getItem('Tasks')
       .then(tasks => {
         const parsedTasks = JSON.parse(tasks);
+        //console.log(parsedTasks);
         if (parsedTasks && typeof parsedTasks === 'object') {
           dispatch(setTasks(parsedTasks));
         }

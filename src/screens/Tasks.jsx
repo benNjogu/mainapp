@@ -1,8 +1,7 @@
-import {View, Text, StyleSheet, Alert, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import TextInput from '../utils/TextInput';
 import CustomButton from '../components/CustomButton';
@@ -14,6 +13,7 @@ import GlobalStyles from '../utils/Styles';
 const Tasks = ({navigation}) => {
   const {tasks, taskID} = useSelector(state => state.taskReducer);
   const dispatch = useDispatch();
+  let salt = Math.floor(Math.random() * 100);
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -26,6 +26,7 @@ const Tasks = ({navigation}) => {
 
   const getTask = () => {
     const task = tasks.find(task => task.ID === taskID);
+    //console.log(task);
     if (task) {
       setTitle(task.Title);
       setDesc(task.Desc);
@@ -40,7 +41,7 @@ const Tasks = ({navigation}) => {
     } else {
       try {
         let task = {
-          ID: taskID + title,
+          ID: taskID + title.charAt(1) + salt,
           Title: title,
           Desc: desc,
           Done: done,
